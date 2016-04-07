@@ -84,11 +84,15 @@ class LoginScreen extends Component {
   }
 
   handlePressLogin () {
-    const { username, password } = this.state
-    const { dispatch } = this.props
-    this.isAttempting = true
-    // attempt a login - a saga is listening to pick it up from here.
-    dispatch(Actions.attemptLogin(username, password))
+    // const { username, password } = this.state
+    // const { dispatch } = this.props
+    // this.isAttempting = true
+    // // attempt a login - a saga is listening to pick it up from here.
+    // dispatch(Actions.attemptLogin(username, password))
+    this.props.onNavigate({
+      type: 'push',
+      key: 'raondom key ' + Math.random().toString()
+    })
   }
 
   handlePressCancel () {
@@ -173,3 +177,4 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(LoginScreen)
+

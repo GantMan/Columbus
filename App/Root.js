@@ -10,6 +10,8 @@ import LoginScreen from './Containers/LoginScreen'
 // Styles
 import styles from './Containers/Styles/RootStyle'
 
+import NavigationContainer from 'NavigationContainer'
+
 const {
   CardStack: NavigationCardStack,
   StateUtils: NavigationStateUtils,
@@ -43,7 +45,7 @@ function createReducer(initialState) {
 const ExampleReducer = createReducer({
   index: 0,
   key: 'exmaple',
-  children: [{key: 'First Route'}],
+  children: [{key: 'Taco Route'}]
 })
 
 export default class RNBase extends React.Component {
@@ -70,7 +72,6 @@ export default class RNBase extends React.Component {
   }
 
   _renderHeader (props) {
-    console.log('HEY FUCKERS', props)
     return (
       <NavigationHeader
         navigationProps={props}
@@ -82,7 +83,7 @@ export default class RNBase extends React.Component {
   _renderTitleComponent (props) {
     return (
       <NavigationHeader.Title>
-        TACO
+        {props.scene.navigationState.key}
       </NavigationHeader.Title>
     )
   }
@@ -107,22 +108,22 @@ export default class RNBase extends React.Component {
               renderNavigation={(navState, onNavigate) =>
                 <NavigationCardStack
                   renderScene={(props) =>
-                    <LoginScreen/>
+                    <LoginScreen
+                      onNavigate={onNavigate}
+                    />
                   }
-                  onNavigate={(action) => window.alert('onNavigate')}
-                  renderOverlay={this._renderHeader}
-                  navigationState={{
-                    key: 'MyPetStack',
-                    index: 2,
-                    children: [
-                      {key: 'Pluto', species: 'dog'},
-                      {key: 'Snoopy', species: 'dog'},
-                      {key: 'Garfield', species: 'cat'}
-                    ]
+                  onNavigate={(action) => {
+                    // called from only some navigation items
+                    if (action && action.type === 'BackAction') {
+                      onNavigate({
+                        type: 'pop'
+                      })
+                    }
                   }}
+                  renderOverlay={this._renderHeader}
+                  navigationState={navState}
                 />
               }
-              style={styles.main}
             />
           </Drawer>
         </View>
