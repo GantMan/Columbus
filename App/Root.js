@@ -77,9 +77,6 @@ export default class RNBase extends React.Component {
         renderTitleComponent={this._renderTitleComponent}
       />
     )
-    // return (
-    //   <Text>Taco</Text>
-    // )
   }
 
   _renderTitleComponent (props) {
