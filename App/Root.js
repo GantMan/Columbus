@@ -10,8 +10,6 @@ import LoginScreen from './Containers/LoginScreen'
 // Styles
 import styles from './Containers/Styles/RootStyle'
 
-import NavigationContainer from 'NavigationContainer'
-
 const {
   CardStack: NavigationCardStack,
   StateUtils: NavigationStateUtils,
@@ -76,6 +74,7 @@ export default class RNBase extends React.Component {
       <NavigationHeader
         navigationProps={props}
         renderTitleComponent={this._renderTitleComponent}
+        renderRightComponent={(props) => <Text>{new Date().getSeconds()}</Text>}
       />
     )
   }
